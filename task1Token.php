@@ -1,4 +1,6 @@
 <?php
+// PHP 8.3.3-1+ubuntu22.04.1+deb.sury.org+1 (cli) (built: Feb 15 2024 18:38:52) (NTS)
+
 require_once('helpers.php');
 
 use Dzyfhuba\Helpers;
