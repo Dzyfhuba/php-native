@@ -1,17 +1,15 @@
 <?php
+require_once('helpers.php');
+
+use Dzyfhuba\Helpers;
+
 class Token
 {
   public $tokens = [];
   function generate($user)
   {
     // generate
-    $length = 10;
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $token = '';
-    for ($i = 0; $i < $length; $i++) {
-      $token .= $characters[rand(0, $charactersLength - 1)];
-    }
+    $token = Helpers::generateRandomString();
     if ($this->tokens[$user]) {
       // add element to last
       $this->tokens[$user] = [...$this->tokens[$user], $token];
@@ -56,17 +54,17 @@ for ($i = 0; $i < 10; $i++) {
 $batch1 = $token->get_tokens();
 
 
-$token_correct = $token->generate('hafidz');
+$tokenCorrect = $token->generate('hafidz');
 $batch2 = $token->get_tokens();
 
-$token_wrong = $token_correct."waduh";
+$tokenWrong = $tokenCorrect."waduh";
 
 // false check: test1
-$test1 = $token->verify_token('hafidz', $token_wrong);
+$test1 = $token->verify_token('hafidz', $tokenWrong);
 $batch3 = $token->get_tokens();
 
 // true check: test2
-$test2 = $token->verify_token('hafidz', $token_correct);
+$test2 = $token->verify_token('hafidz', $tokenCorrect);
 $batch4 = $token->get_tokens();
 
 // another user: ubaidillah
@@ -85,14 +83,14 @@ print_r(json_encode([
   ],
   
   'test1' => $test1,
-  'token_wrong' => $token_wrong,
+  'token_wrong' => $tokenWrong,
   'tokens_batch3' => [
     'lenght' => count($batch3['hafidz']),
     'tokens' => $batch3['hafidz']
   ],
 
   'test2' => $test2,
-  'token_correct' => $token_correct,
+  'token_correct' => $tokenCorrect,
   'tokens_batch4' => [
     'lenght' => count($batch4['hafidz']),
     'tokens' => $batch4['hafidz']
